@@ -1,11 +1,47 @@
-# Prior-art check
+# Prior-art check and program intelligence
 
-Duplicates are the most common way hours get wasted and the most common reject after triage. Run this
-before you sink real time into a lead (early, during Prioritize) and again before you submit (as part
-of Gate 4). It answers one question: has this already been found, fixed, or publicly documented?
+A program's public signals — disclosed reports, changelog, release notes, new features, scope changes
+— answer two questions at once. Read defensively: *has this already been found?* (avoid duplicates).
+Read offensively: *where is the fresh, under-tested surface?* (aim your time). Same sources, both jobs.
+Do this early (Prioritize) and again before you submit (Gate 4).
 
-A duplicate is not a failure of skill — it means someone got there first. The goal is to find that out
-in ten minutes, not after a day of work or after a triager tells you.
+Duplicates are the most common way hours get wasted and the most common reject after triage. A dup is
+not a failure of skill — someone got there first. The goal is to find that out in ten minutes, not
+after a day of work. But the higher-value habit is the offensive one below: hunt where others haven't
+looked yet.
+
+## Aim at the fresh surface — hunt what just shipped
+
+This is the offensive read, and it's where the undiscovered bugs are. New code has had the fewest
+testers, scanners aren't tuned to it, and nobody has reported against it yet — the best ratio of bugs
+found to time spent. When a program ships something, test it first.
+
+Where new surface shows up:
+
+- **Product announcements / changelog / release notes / "What's new".** A new feature, a new API
+  version, a rewritten flow — go straight at it while it's fresh.
+- **Blog posts, status page, and social.** Companies announce launches, integrations, and acquisitions.
+  A new integration or a just-acquired product folded into scope is raw surface.
+- **Scope expansions in the brief.** A newly added asset or domain is a land grab — few people have
+  looked at it yet. Watch the program's scope-change history.
+- **New endpoints and subdomains you can see yourself.** Diff recon over time: re-run and compare
+  `recon/subdomains-all.txt` and the JS/wayback endpoint lists against the last run. A new subdomain, a
+  new `/v3/` route, or a new parameter appearing in JS is a signal nobody handed you.
+- **Beta / feature-flag / staging surfaces** that the brief allows — often the new feature before it's
+  hardened.
+
+Then use disclosed reports as a map of the program's weak spots:
+
+- **Recurring classes.** If the program has paid several IDORs or several SSRFs, the codebase and team
+  have a pattern — look for the *next* instance of that class on a different endpoint, not the exact one
+  already fixed.
+- **What's already taken.** The specific endpoints in disclosed reports are spent; the technique behind
+  them usually isn't. Reapply the idea to surface the report didn't cover.
+- **Response and payout behavior.** Disclosures tell you how the program rates, how fast it triages, and
+  what it tends to reward — useful for deciding where to invest.
+
+Feed the winners of this read into Phase 4 prioritization: new feature first, then the recurring weak
+class on surface no one has reported.
 
 ## Before investing time in a lead
 

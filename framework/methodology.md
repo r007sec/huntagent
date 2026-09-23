@@ -40,6 +40,11 @@ Diff-thinking on the output: surface the handful of hosts/endpoints worth invest
 dump. An `admin.` subdomain, an exposed `.git`, an old API version, a JS file full of endpoints —
 those are leads. Two hundred parked subdomains are not.
 
+Keep the output between sessions and diff it. Re-running recon and comparing `subdomains-all.txt` and
+the JS/wayback endpoint lists against the last run surfaces *new* surface — a subdomain, a `/v3/` route,
+a parameter that wasn't there before. New surface is the best hunting ground; see the fresh-surface read
+in [prior-art-check.md](prior-art-check.md).
+
 ## Phase 3 — Map the attack surface
 
 Turn recon into a testable model. For each live, in-scope app, note:
@@ -54,7 +59,13 @@ Turn recon into a testable model. For each live, in-scope app, note:
 
 ## Phase 4 — Prioritize
 
-Spend time where impact and payout are highest and where auto-scanners are weakest. Rough order:
+Spend time where impact and payout are highest and where auto-scanners are weakest.
+
+First, aim at fresh surface. A just-shipped feature, a new API version, a newly in-scope asset — read
+[prior-art-check.md](prior-art-check.md) for how to spot these. New code has had the fewest testers and
+no prior reports, so it has the best bug-to-time ratio. Test it before the well-trodden endpoints.
+
+Then, by class, rough order:
 
 1. Broken access control / IDOR on sensitive data or actions — common, high-paying, scanner-blind.
 2. Authentication and account takeover — reset flows, OAuth/JWT handling, session fixation.
