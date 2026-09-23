@@ -1,6 +1,7 @@
 # Secrets — never commit
 identity.md
 ENVIRONMENT.md
+.keys.env
 **/.session.env
 **/session.env.local
 *.crt

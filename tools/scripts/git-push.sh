@@ -6,7 +6,7 @@ ROOT="$(cd "$(dirname "${BASH_SOURCE[0]}")/../.." && pwd)"
 cd "$ROOT"
 
 # Block real secret files, but not their checked-in *.template skeletons.
-SECRET_RE='\.session\.env|session\.env\.local|^identity\.md$|^ENVIRONMENT\.md$|\.crt$|\.key$|\.pem$|^(.*/)?(tokens|cookies)\.txt$'
+SECRET_RE='\.session\.env|session\.env\.local|\.keys\.env|^identity\.md$|^ENVIRONMENT\.md$|\.crt$|\.key$|\.pem$|^(.*/)?(tokens|cookies)\.txt$'
 
 blocked() {
   # Match secret files, but never their committed *.template / *.example skeletons.

@@ -10,6 +10,8 @@ DOMAIN="${1:-}"; PROGRAM="${2:-}"
 [ -z "$DOMAIN" ] || [ -z "$PROGRAM" ] && { echo "Usage: bash tools/scripts/recon.sh <domain> <program>"; exit 1; }
 
 ROOT="$(cd "$(dirname "${BASH_SOURCE[0]}")/../.." && pwd)"
+# Recon/provider API keys (account-wide, gitignored). Exported for tools that read env vars.
+[ -f "$ROOT/.keys.env" ] && { set -a; source "$ROOT/.keys.env"; set +a; }
 [ ! -d "$ROOT/programs/$PROGRAM" ] && { echo "[!] programs/$PROGRAM not found. Run new-program.sh first."; exit 1; }
 OUT="$ROOT/programs/$PROGRAM/recon"; mkdir -p "$OUT/gf"
 

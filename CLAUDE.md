@@ -193,7 +193,8 @@ Before testing a host, confirm it with `inscope <url>` (loaded by activate.sh) o
 
 ## Git rules
 
-- Never commit `.session.env` or `identity.md` — they hold tokens and handles (gitignored).
+- Never commit `.session.env`, `.keys.env`, `identity.md`, or `ENVIRONMENT.md` — they hold tokens,
+  API keys, handles, and access details (all gitignored and blocked by `git-push.sh`).
 - Never commit credentials or tokens found during testing — describe them, never paste them.
 - Push via `bash tools/scripts/git-push.sh` — it blocks staged session files.
 - Commit message: `{program}: {what happened}` — e.g. `acme: F001 IDOR confirmed High`.

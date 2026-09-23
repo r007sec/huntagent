@@ -20,6 +20,8 @@ if [ ! -f "$SESSION_FILE" ]; then
 fi
 
 set -a; source "$SESSION_FILE"; set +a
+# Account-wide recon/provider API keys (gitignored), if present — exported into the shell.
+[ -f "$WORKSPACE_ROOT/.keys.env" ] && { set -a; source "$WORKSPACE_ROOT/.keys.env"; set +a; }
 
 export ACTIVE_PROGRAM="$PROGRAM"
 export ACTIVE_PROGRAM_DIR="$PROGRAM_DIR"
@@ -76,4 +78,5 @@ echo "  Target:  ${TARGET_BASE_URL:-NOT SET}"
 echo "  Header:  $ID_HEADER"
 echo "  Bearer:  $([ -n "$AUTH_BEARER" ] && echo SET || echo '- ')   Cookie: $([ -n "$SESSION_COOKIE" ] && echo SET || echo '- ')   VictimID: ${VICTIM_USER_ID:-'-'}"
 echo "  Scope:   $([ -f "$PROGRAM_DIR/scope.txt" ] && echo "$(grep -vcE '^\s*#|^\s*$' "$PROGRAM_DIR/scope.txt") entries in scope.txt" || echo 'scope.txt MISSING — fill from brief')"
+echo "  Keys:    $([ -f "$WORKSPACE_ROOT/.keys.env" ] && echo "$(grep -cE '^[A-Z].*="[^"]+"' "$WORKSPACE_ROOT/.keys.env" 2>/dev/null || echo 0) recon keys loaded" || echo 'no .keys.env (recon runs with free sources only)')"
 echo "  Commands: hcurl ucurl jcurl idor_check inscope"

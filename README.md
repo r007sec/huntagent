@@ -1,8 +1,9 @@
-# Bug Bounty Workspace
+# huntagent
 
-A platform-agnostic hunting framework for Bugcrowd, HackerOne, Intigriti, and YesWeHack. It exists to
-do three things well: find bugs systematically, prove they are real before reporting them, and write
-reports that read like a human wrote them.
+An AI-assisted, platform-agnostic bug bounty framework for Bugcrowd, HackerOne, Intigriti, and
+YesWeHack. It turns an AI agent into a structured hunting partner that does three things well: find
+bugs systematically, prove they are real before reporting them, and write reports that read like a
+human wrote them.
 
 ## Layout
 
@@ -65,8 +66,10 @@ report goes out until it passes the eight-point check in `framework/report-style
 2. `cp ENVIRONMENT.md.template ENVIRONMENT.md` and record anything operational a compaction would lose
    — access commands, endpoints, tool quirks, workarounds. The co-pilot reads it on start and after a
    compaction, and grows it as it learns, so nothing gets rediscovered.
-3. Confirm tool PATH and run `bash tools/scripts/doctor.sh`.
-4. Point a remote at this repo if you want history synced, then `bash tools/scripts/git-push.sh`.
+3. `cp tools/scripts/.keys.env.template .keys.env` and add your recon provider keys (Shodan, Censys,
+   GitHub, etc.). Account-wide, gitignored; `recon.sh` and `activate.sh` load them automatically.
+4. Confirm tool PATH and run `bash tools/scripts/doctor.sh`.
+5. Point a remote at this repo if you want history synced, then `bash tools/scripts/git-push.sh`.
 
 ## Publishing / reuse
 

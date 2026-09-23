@@ -23,6 +23,8 @@ echo "Resources:"
 path "SecLists"          "/usr/share/seclists"
 path "Nuclei templates"  "$HOME/nuclei-templates"
 path "gf patterns"       "$HOME/.gf"
+ROOT="$(cd "$(dirname "${BASH_SOURCE[0]}")/../.." && pwd)"
+path "Recon keys"        "$ROOT/.keys.env"
 
 echo
 echo "Present: $ok   Missing: $miss"

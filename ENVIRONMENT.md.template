@@ -45,6 +45,10 @@ Preflight: bash tools/scripts/doctor.sh
 Resources: SecLists /usr/share/seclists · nuclei-templates ~/nuclei-templates · gf ~/.gf
 ```
 
+Recon/provider API keys live in `.keys.env` at the repo root (gitignored) — copy from
+`tools/scripts/.keys.env.template`. If you use subfinder/amass directly, note their own config paths
+here: `~/.config/subfinder/provider-config.yaml`, `~/.config/amass/config.ini`.
+
 Full command reference: `knowledge-base/tools/toolchain.md`.
 
 ## Quirks & workarounds

@@ -18,6 +18,29 @@ export PATH="/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin:/usr/l
 
 Run `bash tools/scripts/doctor.sh` to confirm the toolchain is installed and paths resolve.
 
+## Recon API keys
+
+Provider keys (Shodan, Censys, VirusTotal, GitHub, SecurityTrails, Chaos, …) are account-wide, not
+per-program. Keep them in one gitignored file at the repo root:
+
+```bash
+cp tools/scripts/.keys.env.template .keys.env   # then fill in the keys you have
+```
+
+`recon.sh` and `activate.sh` source `.keys.env` automatically, so the tools that read environment
+variables pick them up. `activate` shows how many keys loaded; `doctor.sh` checks the file exists.
+`.keys.env` is gitignored and blocked by `git-push.sh` — it never leaves your machine.
+
+Two tools also keep their own config, which you fill separately if you use them directly:
+
+| Tool | Its own key file |
+|------|------------------|
+| subfinder | `~/.config/subfinder/provider-config.yaml` |
+| amass | `~/.config/amass/config.ini` |
+
+Record those paths in `ENVIRONMENT.md` so a rebuild is quick. Without any keys, recon still runs on the
+free passive sources — you just get fewer subdomains.
+
 ## Burp — mark all traffic (set once per program)
 
 The identifier header differs per platform/program. Set it as a Match & Replace rule so every proxied
