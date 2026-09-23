@@ -135,6 +135,11 @@ There is real, demonstrable harm to the business or its users — not an inferre
 Fails if: the only impact you can state is "this is bad practice" or "could potentially lead to," or
 your claimed severity outruns what you actually proved.
 
+Before you settle the severity, check whether the bug is worth more than its class first suggests. A
+read IDOR that also leaks a reset token is account takeover, not data exposure. See
+[impact-escalation.md](impact-escalation.md) for the chains and how to prove the higher impact cleanly
+— then rate on what you demonstrated.
+
 ---
 
 ## What a failed gate looks like in the finding doc
@@ -165,6 +170,10 @@ Passing the gates means it is real. It does not mean it is *yours* to be paid fo
 - Search the platform's public disclosures / hacktivity for the same class on this target.
 - If it is likely a dup, it can still be worth submitting for a fast, well-written report — but set
   your expectation, and prioritize the less obvious findings first.
+
+Run the full [prior-art-check.md](prior-art-check.md) here: the program's disclosures, changelog, known
+CVEs for the stack, and your own dead-ends. It also covers when a likely dup is still worth filing
+because you add impact the prior report did not show.
 
 Being a duplicate does not lower the writing bar. Report it exactly as well; a clean report on a dup
 still builds signal.

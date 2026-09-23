@@ -65,6 +65,10 @@ Spend time where impact and payout are highest and where auto-scanners are weake
 Skip, unless the brief says otherwise: self-XSS, missing headers with no exploit, low-value info
 disclosure, best-practice deviations with no demonstrated harm.
 
+Before you commit hours to a lead, run the quick [prior-art-check.md](prior-art-check.md) — the
+program's disclosures, changelog, and known CVEs for the stack. Ten minutes here saves a day chasing a
+bug someone already reported.
+
 ## Phase 5 — Test
 
 Work one hypothesis at a time so you can attribute cause (Gate 2). Change one variable, observe,
@@ -94,6 +98,10 @@ marked traffic, conservative rates. If a target degrades, stop. Full list:
 Run the lead through [validation-gate.md](validation-gate.md). It becomes a finding only when all
 five gates pass. Document leads that do not pass with the specific blocker and next action — those
 are your fastest wins next session.
+
+Once it passes, ask whether it's worth more than its class suggests: can you chain or widen it into a
+higher impact? See [impact-escalation.md](impact-escalation.md) and demonstrate the escalation before
+you rate the severity.
 
 ## Phase 7 — Report
 

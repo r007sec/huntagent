@@ -154,3 +154,7 @@ Run this against the drafted report. If any answer is "yes," fix it.
    release? If press release, rewrite.
 
 A report that passes all eight is short, plain, and reproducible. That is the target.
+
+For a full worked example — a finding written up as a submission that passes this check — see
+[../examples/EXAMPLE-report.md](../examples/EXAMPLE-report.md) next to the lab-notebook
+[../examples/EXAMPLE-finding.md](../examples/EXAMPLE-finding.md) it was drafted from.

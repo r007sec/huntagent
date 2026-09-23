@@ -217,6 +217,8 @@ Before testing a host, confirm it with `inscope <url>` (loaded by activate.sh) o
 |------|-----------|
 | `framework/methodology.md` | The hunting loop, phase by phase |
 | `framework/validation-gate.md` | The five gates a lead passes to become a finding |
+| `framework/impact-escalation.md` | Chain/widen a bug into higher severity before reporting |
+| `framework/prior-art-check.md` | Check a bug isn't already known/fixed before sinking time |
 | `framework/report-style-guide.md` | How to write reports that don't read as AI |
 | `framework/compliance-and-exclusions.md` | What not to submit, what not to do (submittability) |
 | `framework/post-submission.md` | Handling triage: N/A, dup, needs-info, severity, retest, replies |
@@ -228,6 +230,7 @@ Before testing a host, confirm it with `inscope <url>` (loaded by activate.sh) o
 | `knowledge-base/tools/toolchain.md` | Tool commands + Burp Match & Replace / scope setup |
 | `knowledge-base/recon/recon-playbook.md` | Manual recon reference |
 | `templates/*.md` | finding, report, handoff, program-setup, recon-checklist |
+| `examples/*.md` | Worked example: a finding and its report, fictional target (safe to publish) |
 | `tools/scripts/*.sh` | recon, activate, new-program, git-push, doctor |
 | `ENVIRONMENT.md` | Durable operational notes — anything a compaction would lose; read on start + after compaction (gitignored) |
 | `identity.md` | Per-platform handles/emails/headers (gitignored) |

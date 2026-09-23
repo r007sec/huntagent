@@ -3,7 +3,8 @@
 > Internal header — do not paste into the submission. Fill the platform form from the sections below;
 > which form field each maps to is in `framework/platforms/<platform>.md`. Before submitting, run the
 > eight-point self-check in `framework/report-style-guide.md`. The body below is written to pass it:
-> plain words, no filler, no emoji, bold only where it carries meaning.
+> plain words, no filler, no emoji, bold only where it carries meaning. For a filled example, see
+> `examples/EXAMPLE-report.md`.
 
 Platform: {bugcrowd | hackerone | intigriti | yeswehack}
 Program / asset: {name}

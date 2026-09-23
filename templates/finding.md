@@ -9,7 +9,8 @@ CWE: {CWE-###}
 
 > This is the working file — a lab notebook, not the submission. Write freely here. The polished
 > submission goes in a report drafted from `report.md`. Status changes to CONFIRMED only after all
-> five gates in `framework/validation-gate.md` pass.
+> five gates in `framework/validation-gate.md` pass. For a filled example, see
+> `examples/EXAMPLE-finding.md`.
 
 ## Summary
 

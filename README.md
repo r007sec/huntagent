@@ -13,6 +13,8 @@ identity.md                   Per-platform handles/emails/headers (gitignored)
 framework/
   methodology.md              The hunting loop
   validation-gate.md          Five gates: LEAD -> CONFIRMED (evidence, baseline, traps)
+  impact-escalation.md        Chain/widen a bug into higher severity before reporting
+  prior-art-check.md          Confirm it isn't already known before sinking time
   report-style-guide.md       Writing reports that don't read as AI
   compliance-and-exclusions.md  What not to submit, what not to do
   post-submission.md          Handling triage after you submit
@@ -25,6 +27,7 @@ knowledge-base/
   recon/                      Recon playbook
   tools/                      Toolchain + Burp setup
 templates/                    finding, report, handoff, program-setup, recon-checklist
+examples/                     Worked finding + report on a fictional target (safe to publish)
 tools/scripts/                recon, activate, new-program, git-push, doctor
 programs/                     One folder per program (created on demand)
 ```
@@ -64,3 +67,21 @@ report goes out until it passes the eight-point check in `framework/report-style
    compaction, and grows it as it learns, so nothing gets rediscovered.
 3. Confirm tool PATH and run `bash tools/scripts/doctor.sh`.
 4. Point a remote at this repo if you want history synced, then `bash tools/scripts/git-push.sh`.
+
+## Publishing / reuse
+
+This framework is built to be reused and is safe to make public. What stays private is enforced by
+`.gitignore` and `git-push.sh`, which refuse to commit:
+
+- `identity.md`, `ENVIRONMENT.md` — your handles and operational access
+- `programs/` contents and any `.session.env` — real targets, tokens, findings
+- keys, certs, `tokens.txt`, `cookies.txt`
+
+The `examples/` are a **fictional** target on purpose. Real program findings are confidential under
+platform disclosure terms (see `framework/compliance-and-exclusions.md`) — never commit a real
+program's report, host, or data to a public repo. Sanitize to an invented target if you want to keep an
+example.
+
+To publish: create an empty GitHub repo, then `git remote add origin <url>` and
+`bash tools/scripts/git-push.sh "publish framework"`. Before the first push, skim
+`git ls-files` and confirm no `programs/` or identity files are tracked.
