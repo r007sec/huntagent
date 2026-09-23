@@ -14,6 +14,7 @@ framework/
   validation-gate.md          Five gates: LEAD -> CONFIRMED (evidence, baseline, traps)
   report-style-guide.md       Writing reports that don't read as AI
   compliance-and-exclusions.md  What not to submit, what not to do
+  post-submission.md          Handling triage after you submit
   severity-mapping.md         CVSS across all four platforms
   platforms/                  Per-platform form fields, headers, scope quirks
 knowledge-base/
@@ -21,8 +22,9 @@ knowledge-base/
   false-positive-traps.md     Per-class ways a lead looks real but isn't
   payloads/                   Payloads by category
   recon/                      Recon playbook
+  tools/                      Toolchain + Burp setup
 templates/                    finding, report, handoff, program-setup, recon-checklist
-tools/scripts/                recon, activate, new-program, git-push
+tools/scripts/                recon, activate, new-program, git-push, doctor
 programs/                     One folder per program (created on demand)
 ```
 

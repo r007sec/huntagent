@@ -24,6 +24,14 @@ cp "$ROOT/tools/scripts/.session.env.template" "$DIR/.session.env"
 sed -i "s/^PLATFORM=.*/PLATFORM=\"$PLATFORM\"/" "$DIR/.session.env"
 [ -n "$DOMAIN" ] && sed -i "s#^TARGET_BASE_URL=.*#TARGET_BASE_URL=\"https://$DOMAIN\"#" "$DIR/.session.env"
 
+# Scope allowlist — the source of truth for what you may test. Fill from the brief.
+{
+  echo "# In-scope hosts for $NAME — copy EXACTLY from the program brief."
+  echo "# One per line. '*.example.com' matches any subdomain; 'api.example.com' is exact."
+  echo "# The 'inscope <url>' helper (after activate) and your judgement both read this."
+  [ -n "$DOMAIN" ] && { echo "$DOMAIN"; echo "*.$DOMAIN"; }
+} > "$DIR/scope.txt"
+
 echo "Created programs/$NAME  [$PLATFORM]"
 echo "Next:"
 echo "  1. Fill programs/$NAME/README.md from the brief (scope, rules, required header)"

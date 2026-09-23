@@ -1,6 +1,7 @@
 # SSRF — Server-Side Request Forgery
 
-> **Severity:** P1–P2  
+> Severity: High–Critical  ·  Translate to any platform via `framework/severity-mapping.md`.
+> (Inline P1–P5 references below are Bugcrowd VRT — map them the same way.)
 > **Frequency:** Common, especially in modern cloud apps  
 > **Payout range:** $500–$10,000+
 

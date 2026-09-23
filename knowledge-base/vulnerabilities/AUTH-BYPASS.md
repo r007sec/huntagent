@@ -1,6 +1,7 @@
 # Authentication & Authorization Bypass
 
-> **Severity:** P1–P2  
+> Severity: High–Critical  ·  Translate to any platform via `framework/severity-mapping.md`.
+> (Inline P1–P5 references below are Bugcrowd VRT — map them the same way.)
 > **Frequency:** Common  
 > **Payout range:** $500–$10,000+
 

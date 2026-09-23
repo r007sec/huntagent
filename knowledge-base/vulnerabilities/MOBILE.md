@@ -1,6 +1,7 @@
 # Mobile App Testing (Android / iOS)
 
-> **Severity:** P1–P3
+> Severity: Low–Critical  ·  Translate to any platform via `framework/severity-mapping.md`.
+> (Inline P1–P5 references below are Bugcrowd VRT — map them the same way.)
 > **Key insight:** The app itself is recon. The real bugs are on the backend API it talks to.
 
 ---

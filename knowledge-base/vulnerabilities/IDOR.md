@@ -1,6 +1,7 @@
 # IDOR — Insecure Direct Object Reference
 
-> **Severity:** P2–P3 (P1 if account takeover possible)  
+> Severity: Medium–Critical (Critical if it enables account takeover)  ·  Translate to any platform via `framework/severity-mapping.md`.
+> (Inline P1–P5 references below are Bugcrowd VRT — map them the same way.)
 > **Frequency:** Very common across all platforms  
 > **Payout range:** $100–$3,000+
 

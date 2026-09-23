@@ -40,10 +40,34 @@ except:pass" > "$OUT/subs-crt.txt" || true
 cat "$OUT"/subs-*.txt 2>/dev/null | sort -u | grep -v '^$' > "$OUT/subdomains-all.txt"
 log "  $(wc -l < "$OUT/subdomains-all.txt") unique subdomains"
 
+# 1b. Scope filter — only probe in-scope hosts (don't send marked traffic out of scope)
+SCOPE="$ROOT/programs/$PROGRAM/scope.txt"
+PROBE="$OUT/subdomains-all.txt"
+if [ -f "$SCOPE" ] && grep -qvE '^\s*#|^\s*$' "$SCOPE"; then
+  python3 - "$SCOPE" "$OUT/subdomains-all.txt" > "$OUT/subdomains-inscope.txt" <<'PY'
+import sys
+pats=[l.split('#')[0].strip() for l in open(sys.argv[1])]; pats=[p for p in pats if p]
+def ok(h):
+    for p in pats:
+        if p.startswith('*.'):
+            b=p[2:]
+            if h==b or h.endswith('.'+b): return True
+        elif h==p: return True
+    return False
+for h in open(sys.argv[2]):
+    h=h.strip()
+    if h and ok(h): print(h)
+PY
+  PROBE="$OUT/subdomains-inscope.txt"
+  log "  scope filter: $(wc -l < "$PROBE") of $(wc -l < "$OUT/subdomains-all.txt") in scope (probing only these)"
+else
+  log "  no scope.txt — probing all enumerated hosts; fill scope.txt to restrict"
+fi
+
 # 2. Live hosts (httpx; binary may be 'httpx' or 'httpxx')
 log "live hosts"
 HTTPX=$(command -v httpxx || command -v httpx || echo httpx)
-"$HTTPX" -l "$OUT/subdomains-all.txt" -silent -title -status-code -tech-detect \
+"$HTTPX" -l "$PROBE" -silent -title -status-code -tech-detect \
   -content-length -follow-redirects -timeout 10 \
   -H "User-Agent: $UA" -H "$ID_HEADER" -o "$OUT/live-hosts.txt" 2>/dev/null || true
 awk '{print $1}' "$OUT/live-hosts.txt" 2>/dev/null | sort -u > "$OUT/live-urls.txt"

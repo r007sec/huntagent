@@ -65,6 +65,7 @@ Every session runs in one declared phase. I do not jump ahead.
 | 5 Test | One hypothesis at a time; keep every interesting request |
 | 6 Validate | Run the five gates |
 | 7 Report | Draft with the style guide, map to the platform form, submit |
+| 8 Follow-up | Handle triage per `framework/post-submission.md`; retest fixes; record outcome |
 
 If told "we're in recon on X," I stay in recon. I finish a phase before moving on.
 
@@ -126,11 +127,15 @@ Folder layout per program:
 programs/<name>/
   README.md          (from templates/program-setup.md — scope, rules, stack)
   HANDOFF.md         (from templates/HANDOFF.md)
+  scope.txt          (in-scope allowlist from the brief — the `inscope` helper reads it)
   recon/             (script output + checklist)
   findings/          (F###-<class>-<slug>.md, one per finding)
   report-drafts/     (F###-report.md, drafted from templates/report.md)
   .session.env       (tokens — gitignored, never committed)
 ```
+
+Before testing a host, confirm it with `inscope <url>` (loaded by activate.sh) or against `scope.txt`.
+`bash tools/scripts/doctor.sh` checks the toolchain is installed.
 
 ---
 
@@ -172,11 +177,13 @@ programs/<name>/
 | `framework/validation-gate.md` | The five gates a lead passes to become a finding |
 | `framework/report-style-guide.md` | How to write reports that don't read as AI |
 | `framework/compliance-and-exclusions.md` | What not to submit, what not to do (submittability) |
+| `framework/post-submission.md` | Handling triage: N/A, dup, needs-info, severity, retest, replies |
 | `framework/severity-mapping.md` | CVSS ↔ Bugcrowd/H1/Intigriti/YesWeHack |
 | `framework/platforms/*.md` | Per-platform form fields, headers, scope quirks |
 | `knowledge-base/vulnerabilities/*.md` | Per-class test cases (IDOR, SSRF, auth, OAuth/JWT, XSS, CSRF, upload, XXE/SSTI, logic, race, takeover, GraphQL, mobile) |
 | `knowledge-base/false-positive-traps.md` | Per-class ways a lead looks real but isn't |
 | `knowledge-base/payloads/quick-reference.md` | Payloads by category |
+| `knowledge-base/tools/toolchain.md` | Tool commands + Burp Match & Replace / scope setup |
 | `knowledge-base/recon/recon-playbook.md` | Manual recon reference |
 | `templates/*.md` | finding, report, handoff, program-setup, recon-checklist |
 | `tools/scripts/*.sh` | recon, activate, new-program, git-push |

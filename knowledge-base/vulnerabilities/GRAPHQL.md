@@ -1,6 +1,7 @@
 # GraphQL Testing
 
-> **Severity:** P1–P3 depending on finding
+> Severity: Medium–Critical (depends on the finding)  ·  Translate to any platform via `framework/severity-mapping.md`.
+> (Inline P1–P5 references below are Bugcrowd VRT — map them the same way.)
 > **Frequency:** Growing fast — most modern SaaS apps use it
 > **Payout range:** $200–$10,000+
 
