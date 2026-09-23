@@ -98,8 +98,8 @@ program README before touching a host.
 
 ## Session start — I do this without being asked
 
-1. Read `ENVIRONMENT.md` — how to reach the VPN, Burp/Burp MCP, and tools. I load access facts from
-   here instead of rediscovering them.
+1. Read `ENVIRONMENT.md` — durable operational notes (how to reach and operate things, plus quirks and
+   workarounds). I load these instead of rediscovering them.
 2. List `programs/` to see what exists.
 3. For the program in play, read its `HANDOFF.md` to load state.
 4. Announce: active leads, last action, next action.
@@ -123,16 +123,33 @@ file already says exactly where we are.
 blocking gate and what's missing, confirmed findings' status, dead ends, exact next action), then
 commit with `bash tools/scripts/git-push.sh "{program}: {what happened}"`.
 
-If an operational access fact changes or turns out wrong — a new VPN command, the Burp MCP endpoint, a
-tool path — I fix it in `ENVIRONMENT.md` the moment I learn it.
+## Capture reflex — write down anything a compaction would lose
+
+Any time I learn something that took effort, isn't obvious from the code or a program file, and I'd
+need again, I record it immediately — before it gets summarized away. The test: *would losing this make
+me repeat work or flounder next time?* If yes, it goes in a file now, not in my head. This is the whole
+defense against compaction: state lives in files, so a summary can drop and nothing is lost.
+
+Where it goes:
+
+- **How to reach or operate something** — an access command, an endpoint, a tool flag that finally
+  worked, an env var that must be set, a rate-limit threshold I hit, a target's odd auth step, any
+  workaround → `ENVIRONMENT.md`. These are the facts that aren't tied to one program and would send me
+  searching after a compaction.
+- **Where the current work stands** — what I just tried, what a request showed, a lead's gate, a dead
+  end, the next step → the active program's `HANDOFF.md`.
+- **A lasting fact about the user or how they want me to work** → memory.
+
+If something turns out wrong, I fix it in the same file the moment I learn it, so a past session's
+mistake doesn't get rediscovered as if it were true.
 
 ## Recovering after a context compaction
 
 The conversation can be summarized mid-task; when it is, I do not trust my memory of operational
 details or the exact sub-step. Before acting, I re-read, in order:
 
-1. `ENVIRONMENT.md` — how to reach the VPN, Burp/Burp MCP, tools. I never re-derive access by trial
-   and error; if a step here fails, I ask once and correct the file.
+1. `ENVIRONMENT.md` — the durable operational notes. I never re-derive by trial and error what a past
+   session already worked out; if a step here fails, I ask once and correct the file.
 2. The active program's `HANDOFF.md` — the "Right now" block is where we are; resume from "Next action".
 3. The active program's `README.md` scope and `scope.txt` — before touching any host again.
 
@@ -212,5 +229,5 @@ Before testing a host, confirm it with `inscope <url>` (loaded by activate.sh) o
 | `knowledge-base/recon/recon-playbook.md` | Manual recon reference |
 | `templates/*.md` | finding, report, handoff, program-setup, recon-checklist |
 | `tools/scripts/*.sh` | recon, activate, new-program, git-push, doctor |
-| `ENVIRONMENT.md` | How to reach VPN / Burp / Burp MCP / tools — read on start + after compaction (gitignored) |
+| `ENVIRONMENT.md` | Durable operational notes — anything a compaction would lose; read on start + after compaction (gitignored) |
 | `identity.md` | Per-platform handles/emails/headers (gitignored) |
