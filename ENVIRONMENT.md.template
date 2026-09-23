@@ -1,0 +1,81 @@
+# Environment — operational access
+
+How to reach the things a hunt depends on: the target network, the intercepting proxy, the tools.
+This is the file that stops post-compaction floundering — if Claude ever forgets how to connect the
+VPN or talk to Burp, the answer is here, not in a fresh search.
+
+Copy this to `ENVIRONMENT.md` (gitignored) and fill in the real values. Keep commands exact and
+copy-pasteable. Put credentials where the file says they live; do not paste secrets here.
+
+Rule: if anything below is wrong, stale, or missing, fix it here the moment you find out. Never
+rediscover access by trial and error — read this, and if it fails, ask once and record the answer.
+
+---
+
+## VPN / target network
+
+Needed for: {which programs / scopes require the VPN — leave blank if none do}
+
+```
+Connect:    {e.g. sudo openvpn --config ~/vpn/acme.ovpn --daemon}
+Config:     {path to .ovpn or wg config}
+Credentials:{where they live — e.g. in ~/.config/… ; NOT pasted here}
+Verify up:  {e.g. curl -s https://internal.acme.test/health  →  expect 200}
+My VPN IP:  {command to check, e.g. ip -4 addr show tun0}
+Disconnect: {e.g. sudo pkill openvpn}
+```
+
+Notes: {split-tunnel? DNS quirks? which hosts are only reachable on-VPN?}
+
+---
+
+## Burp Suite
+
+```
+Launch:       {e.g. burpsuite &   or path to the jar}
+Proxy listen: 127.0.0.1:8080
+CA cert:      {path if exported, for curl --cacert / browser trust}
+Project file: {where the running project lives, if reused}
+```
+
+Match & Replace for the traffic-identifier header is configured per `knowledge-base/tools/toolchain.md`.
+
+### Burp MCP (if used)
+
+How Claude drives Burp directly.
+
+```
+Server:     {enabled in Burp?  extension name / MCP server}
+Endpoint:   {host:port or socket the MCP tool talks to, e.g. 127.0.0.1:9876}
+Verify up:  {the one call/command that confirms it responds}
+Tool names: {the MCP tool prefix Claude should look for, so it doesn't hunt for it}
+```
+
+If the MCP server is not connected this session, that is a connection problem to report — not a
+reason to conclude the capability is missing.
+
+---
+
+## Tools
+
+```
+PATH:      export PATH="/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin:/usr/local/go/bin:$HOME/go/bin:$HOME/.local/bin"
+Preflight: bash tools/scripts/doctor.sh    # confirms every binary + resource path resolves
+```
+
+Resource paths (adjust to this machine):
+
+```
+SecLists:         /usr/share/seclists
+nuclei-templates: ~/nuclei-templates
+gf patterns:      ~/.gf
+```
+
+Full command reference: `knowledge-base/tools/toolchain.md`.
+
+---
+
+## Other access
+
+{Anything else a session assumes: staging creds location, a jump host, a specific browser profile,
+an OOB/interactsh server, a collaborator URL. One line each, with the exact command or location.}

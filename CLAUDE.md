@@ -98,21 +98,46 @@ program README before touching a host.
 
 ## Session start — I do this without being asked
 
-1. List `programs/` to see what exists.
-2. For the program in play, read its `HANDOFF.md` to load state.
-3. Announce: active leads, last action, next action.
-4. If no handoff exists, ask which program and read its `README.md`.
+1. Read `ENVIRONMENT.md` — how to reach the VPN, Burp/Burp MCP, and tools. I load access facts from
+   here instead of rediscovering them.
+2. List `programs/` to see what exists.
+3. For the program in play, read its `HANDOFF.md` to load state.
+4. Announce: active leads, last action, next action.
+5. If no handoff exists, ask which program and read its `README.md`.
 
 I read the files and know where we are — I do not ask "what were we working on?"
 
-## Session end — I do this without being asked
+## Keeping state current — not just at session end
 
-1. Update `programs/{program}/HANDOFF.md`: current phase, last action, each active lead with its
-   blocking gate and what's missing, confirmed findings' status, dead ends, and the exact next
-   action.
-2. Commit with `bash tools/scripts/git-push.sh "{program}: {what happened}"`.
+The handoff is what makes the next session fast, and what lets me recover if the context compacts
+mid-task. So I keep it live, not stale.
 
-The handoff is what makes the next session fast. There is no exception.
+**Continuously, as I work** — I update `programs/{program}/HANDOFF.md` after each meaningful step, not
+only when we stop. A step worth writing: a command run and what it showed, a lead moved to a new gate,
+a gate passed or failed, a dead end reached, a blocker hit. In practice that lands every few minutes of
+real work. The "Right now" block (phase, last action, next action) always reflects the true current
+state. This is cheap and it is the whole point — a mid-task compaction then costs nothing, because the
+file already says exactly where we are.
+
+**At session end** — a final pass over the same file (phase, last action, each active lead with its
+blocking gate and what's missing, confirmed findings' status, dead ends, exact next action), then
+commit with `bash tools/scripts/git-push.sh "{program}: {what happened}"`.
+
+If an operational access fact changes or turns out wrong — a new VPN command, the Burp MCP endpoint, a
+tool path — I fix it in `ENVIRONMENT.md` the moment I learn it.
+
+## Recovering after a context compaction
+
+The conversation can be summarized mid-task; when it is, I do not trust my memory of operational
+details or the exact sub-step. Before acting, I re-read, in order:
+
+1. `ENVIRONMENT.md` — how to reach the VPN, Burp/Burp MCP, tools. I never re-derive access by trial
+   and error; if a step here fails, I ask once and correct the file.
+2. The active program's `HANDOFF.md` — the "Right now" block is where we are; resume from "Next action".
+3. The active program's `README.md` scope and `scope.txt` — before touching any host again.
+
+Only then do I continue. If the file that should hold a fact does not, I ask for it and write it down
+so the next compaction is free.
 
 ---
 
@@ -186,5 +211,6 @@ Before testing a host, confirm it with `inscope <url>` (loaded by activate.sh) o
 | `knowledge-base/tools/toolchain.md` | Tool commands + Burp Match & Replace / scope setup |
 | `knowledge-base/recon/recon-playbook.md` | Manual recon reference |
 | `templates/*.md` | finding, report, handoff, program-setup, recon-checklist |
-| `tools/scripts/*.sh` | recon, activate, new-program, git-push |
+| `tools/scripts/*.sh` | recon, activate, new-program, git-push, doctor |
+| `ENVIRONMENT.md` | How to reach VPN / Burp / Burp MCP / tools — read on start + after compaction (gitignored) |
 | `identity.md` | Per-platform handles/emails/headers (gitignored) |

@@ -8,6 +8,7 @@ reports that read like a human wrote them.
 
 ```
 CLAUDE.md                     How the co-pilot operates (read this first)
+ENVIRONMENT.md                How to reach VPN / Burp / Burp MCP / tools (gitignored; see .template)
 identity.md                   Per-platform handles/emails/headers (gitignored)
 framework/
   methodology.md              The hunting loop
@@ -58,5 +59,8 @@ report goes out until it passes the eight-point check in `framework/report-style
 
 1. Fill in `identity.md` with your handle, test-account email pattern, and required header for each
    platform you hunt on.
-2. Confirm tool PATH (see `knowledge-base/recon/recon-playbook.md`).
-3. Point a remote at this repo if you want history synced, then `bash tools/scripts/git-push.sh`.
+2. `cp ENVIRONMENT.md.template ENVIRONMENT.md` and fill in how you reach the VPN, Burp / Burp MCP, and
+   tools. This is what the co-pilot reads on start and after a context compaction so it never has to
+   rediscover access.
+3. Confirm tool PATH and run `bash tools/scripts/doctor.sh`.
+4. Point a remote at this repo if you want history synced, then `bash tools/scripts/git-push.sh`.
