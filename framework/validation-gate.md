@@ -34,12 +34,26 @@ finding doc records exactly which gate failed and what would close it.
 
 The behavior triggers reliably, not once by luck.
 
-- Reproduced at least **twice**, ideally after clearing session/cookies and starting fresh.
-- The exact request that triggers it is saved (Burp item, raw HTTP, or a `curl` command).
+- Reproduced at least **twice**, the second time from a clean state — new incognito window, fresh
+  login, cleared cookies — to rule out a cached response or a stale session artifact.
 - If it depends on timing, ordering, or a race, that condition is written down and repeatable.
 
 Fails if: it worked once and you cannot make it happen again, or you are not sure which of your ten
 changes caused it.
+
+**Evidence bundle (capture this as you go, not after).** A finding is only as strong as what you can
+show. Collect, in the finding's `logs/` folder:
+
+- The exact triggering request as raw HTTP **and** a runnable `curl` (Burp "Copy as curl").
+- The **request + response pair** for both the normal case and the exploit case — the contrast is
+  the proof.
+- For multi-account bugs, both requests **labeled** attacker/victim, with which account owns what.
+- A wall-clock **timestamp** of first reproduction (protects you in first-reporter / dedup disputes).
+- A short screen recording for anything stateful (logic, race, multi-step) — steps are hard to
+  convey in text alone.
+
+Redact real secrets/tokens to the minimum needed to prove the point; never commit them (describe,
+don't paste).
 
 ### Gate 2 — Attributable (you know the root cause)
 
@@ -56,6 +70,17 @@ absent. That is still a lead worth chasing — but it is a lead.
 
 There is a concrete proof, not a theory that it "could" be abused.
 
+**Establish the baseline first (control test).** Before you claim a bypass, prove the control
+*works* for you: confirm the endpoint correctly denies you when it should, or returns your own data
+when it should. Then break it. A "bypass" you never saw enforced is often not a bypass — it may be a
+public endpoint, an already-valid session, or data that was never protected. The before/after
+contrast is both your proof and your false-positive filter.
+
+**Rule out the class's known false-positive traps.** Generic reproduction is not enough — each class
+has specific ways to look real without being real (an IDOR hitting public data, an SSRF that only
+resolved DNS, a self-XSS, a "bypass" using your own live cookie). Before confirming, walk the traps
+for this class in [../knowledge-base/false-positive-traps.md](../knowledge-base/false-positive-traps.md).
+
 - For access control / IDOR: two accounts, and account A demonstrably reads or changes account B's
   data. A single account seeing its own data is not a finding.
 - For injection/XSS: the payload actually executes or the query actually runs — a callback received,
@@ -68,18 +93,27 @@ There is a concrete proof, not a theory that it "could" be abused.
 
 Fails if: the proof is "in theory an attacker could..." with no demonstration.
 
-### Gate 4 — In scope
+### Gate 4 — In scope and submittable
 
-Confirmed against the current program brief, today — not last week's cached version.
+Confirmed against the current program brief, today — not last week's cached version. Scope is one
+half; *how you tested* and *whether the class even qualifies* is the other.
 
-- Target host/asset is explicitly listed as in scope.
-- The vulnerability class is not on the program's exclusions / non-qualifying list.
-- No prohibited technique was used to find it (no automated scanning where banned, no DoS, no social
-  engineering, no testing against real users' accounts).
-- Check [platforms/](platforms/) for the platform's standard exclusions on top of the brief.
+Scope and class:
+- Target host/asset is explicitly listed as in scope (wildcard vs. specific host — do not assume).
+- The vulnerability class is not on the program's exclusions or the platform's standard non-qualifying
+  list. See [compliance-and-exclusions.md](compliance-and-exclusions.md) for the always-excluded
+  issues and [platforms/](platforms/) for platform specifics.
 
-Fails if: the asset is out of scope, third-party, or the class is explicitly excluded. If out of
-scope, it is not a submission — full stop.
+How you tested (a finding produced by a prohibited method is not submittable, however real):
+- Traffic was marked with the required identifier header.
+- No prohibited technique: no automated scanning where banned, no DoS/load testing, no social
+  engineering or phishing, no physical attacks.
+- You did not touch real users' data or accounts — only your own controlled test accounts.
+- You stayed within rate limits and stopped the moment anything degraded.
+
+Fails if: the asset is out of scope or third-party, the class is excluded, or you can only reproduce
+it with a method the program forbids. If out of scope or non-qualifying, it is not a submission — full
+stop.
 
 ### Gate 5 — Impactful
 
@@ -92,8 +126,14 @@ There is real, demonstrable harm to the business or its users — not an inferre
 - Missing security headers, self-XSS, verbose errors with no exploit, best-practice deviations with
   no demonstrated harm: these usually fail this gate. Log them, do not report them, unless the brief
   says otherwise.
+- **Severity self-consistency.** Reconcile the severity you plan to claim with what the PoC actually
+  demonstrated, not the worst case you can imagine. If you claim Critical, the PoC must show the
+  Critical outcome (code ran, admin taken over, creds pulled) — not a path that "could lead there."
+  Rate on the demonstrated outcome and translate via [severity-mapping.md](severity-mapping.md). An
+  honest High beats an inflated Critical that triage downgrades and remembers.
 
-Fails if: the only impact you can state is "this is bad practice" or "could potentially lead to."
+Fails if: the only impact you can state is "this is bad practice" or "could potentially lead to," or
+your claimed severity outruns what you actually proved.
 
 ---
 

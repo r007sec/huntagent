@@ -11,12 +11,14 @@ CLAUDE.md                     How the co-pilot operates (read this first)
 identity.md                   Per-platform handles/emails/headers (gitignored)
 framework/
   methodology.md              The hunting loop
-  validation-gate.md          Five gates: LEAD -> CONFIRMED
+  validation-gate.md          Five gates: LEAD -> CONFIRMED (evidence, baseline, traps)
   report-style-guide.md       Writing reports that don't read as AI
+  compliance-and-exclusions.md  What not to submit, what not to do
   severity-mapping.md         CVSS across all four platforms
   platforms/                  Per-platform form fields, headers, scope quirks
 knowledge-base/
-  vulnerabilities/            Per-class test cases
+  vulnerabilities/            Per-class test cases (13 classes)
+  false-positive-traps.md     Per-class ways a lead looks real but isn't
   payloads/                   Payloads by category
   recon/                      Recon playbook
 templates/                    finding, report, handoff, program-setup, recon-checklist

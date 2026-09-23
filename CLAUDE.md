@@ -171,9 +171,11 @@ programs/<name>/
 | `framework/methodology.md` | The hunting loop, phase by phase |
 | `framework/validation-gate.md` | The five gates a lead passes to become a finding |
 | `framework/report-style-guide.md` | How to write reports that don't read as AI |
+| `framework/compliance-and-exclusions.md` | What not to submit, what not to do (submittability) |
 | `framework/severity-mapping.md` | CVSS ↔ Bugcrowd/H1/Intigriti/YesWeHack |
 | `framework/platforms/*.md` | Per-platform form fields, headers, scope quirks |
-| `knowledge-base/vulnerabilities/*.md` | Per-class test cases (IDOR, SSRF, auth, GraphQL, mobile) |
+| `knowledge-base/vulnerabilities/*.md` | Per-class test cases (IDOR, SSRF, auth, OAuth/JWT, XSS, CSRF, upload, XXE/SSTI, logic, race, takeover, GraphQL, mobile) |
+| `knowledge-base/false-positive-traps.md` | Per-class ways a lead looks real but isn't |
 | `knowledge-base/payloads/quick-reference.md` | Payloads by category |
 | `knowledge-base/recon/recon-playbook.md` | Manual recon reference |
 | `templates/*.md` | finding, report, handoff, program-setup, recon-checklist |

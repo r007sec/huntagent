@@ -24,6 +24,9 @@ The brief decides whether your work counts. Read it fully and record, in the pro
 - Required traffic-identifier header for the platform (see [platforms/](platforms/)).
 - Testing constraints: automated scanning allowed? rate limits? test accounts self-registered?
 - Reward table and any Focus Areas (higher-paying targets).
+- Cross-check the class exclusions and conduct rules in
+  [compliance-and-exclusions.md](compliance-and-exclusions.md) so you don't spend time on something
+  non-qualifying.
 
 If an asset is not clearly in scope, it is out of scope until proven otherwise.
 
@@ -65,10 +68,26 @@ disclosure, best-practice deviations with no demonstrated harm.
 ## Phase 5 — Test
 
 Work one hypothesis at a time so you can attribute cause (Gate 2). Change one variable, observe,
-record. Use the knowledge-base vuln files for per-class test cases. Keep every interesting request.
+record. Keep every interesting request.
 
-Stay within the rules: read-only PoCs, no DoS, no destructive payloads, no touching real users' data.
-Rate-limit yourself; if a target degrades, stop.
+**Build a test matrix.** For each priority target from Phase 4, list the classes worth trying against
+it (an upload feature → file-upload, XXE, stored XSS; an ID-addressed API → IDOR, access control; a
+"fetch URL" field → SSRF). Then work the matrix cell by cell. This is how you get coverage instead of
+poking at whatever catches your eye.
+
+**Establish the baseline before claiming a break.** Prove the control works first — the endpoint
+denies you when it should, returns only your own data, enforces the limit — then break it and keep
+both request/response pairs. Most false positives die here (see
+[../knowledge-base/false-positive-traps.md](../knowledge-base/false-positive-traps.md)).
+
+Per-class test cases live in [../knowledge-base/vulnerabilities/](../knowledge-base/vulnerabilities/):
+IDOR, SSRF, AUTH-BYPASS, OAUTH-JWT, XSS, CSRF, FILE-UPLOAD, XXE-SSTI, BUSINESS-LOGIC,
+RACE-CONDITIONS, SUBDOMAIN-TAKEOVER, GRAPHQL, MOBILE. Payloads by category are in
+[../knowledge-base/payloads/quick-reference.md](../knowledge-base/payloads/quick-reference.md).
+
+Stay within the rules: read-only PoCs, no DoS, no destructive payloads, no touching real users' data,
+marked traffic, conservative rates. If a target degrades, stop. Full list:
+[compliance-and-exclusions.md](compliance-and-exclusions.md).
 
 ## Phase 6 — Validate
 
