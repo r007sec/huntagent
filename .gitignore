@@ -1,0 +1,15 @@
+# Secrets — never commit
+identity.md
+**/.session.env
+**/session.env.local
+*.crt
+*.key
+*.pem
+
+# Auth tokens / cookies dumped during testing
+**/tokens.txt
+**/cookies.txt
+
+# Scratch
+*.tmp
+.DS_Store
